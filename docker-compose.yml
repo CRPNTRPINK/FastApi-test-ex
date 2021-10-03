@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=posts
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=7645
+    ports:
+    - 5432:5432
+  web:
+    build: .
+    entrypoint: ["bash", "-c", "alembic revision --autogenerate -m 'Added required tables' && alembic upgrade head && uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000"]
+#    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
