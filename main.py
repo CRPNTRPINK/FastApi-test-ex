@@ -42,7 +42,6 @@ async def write():
             await database.fetch_one(post_query)
 
 
-
 @app.get('/text/{text}', status_code=status.HTTP_200_OK)
 async def find_by_text(text):
     query = select(
